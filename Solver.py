@@ -66,14 +66,35 @@ class Solver:
         return 'FAILURE'
 
     def solveSkyscrapers(self):
+        
         observers = {}
-
-        observers["left"] = [int(self.data['variables_found'][str(k)+'0']) for k in range(1, self.GRID_LEN+1)]
-        observers["right"] = [int(self.data['variables_found'][str(k)+str(self.GRID_LEN+1)]) for k in range(1, self.GRID_LEN+1)]
-        observers["top"] = [int(self.data['variables_found']['0'+str(k)]) for k in range(1, self.GRID_LEN+1)]
-        observers["bottom"] = [int(self.data['variables_found'][str(self.GRID_LEN+1) + str(k)]) for k in range(1, self.GRID_LEN+1)]
-
+ 
         self.observers = observers
+        print("variables_found:", self.data['variables_found'])
+
+
+        try:
+            #observers["left"] = [int(self.data['variables_found'][str(k)+'0']) for k in range(1, self.GRID_LEN+1)]
+            observers["left"] = [int(self.data['variables_found'].get(str(k)+'0', 0)) for k in range(1, self.GRID_LEN+1)]
+        except KeyError as e:
+            print(f"KeyError for left: {e}")
+        try:
+            #observers["right"] = [int(self.data['variables_found'][str(k)+str(self.GRID_LEN+1)]) for k in range(1, self.GRID_LEN+1)]
+            observers["right"] = [int(self.data['variables_found'].get(str(k)+str(self.GRID_LEN+1), 0)) for k in range(1, self.GRID_LEN+1)]
+        except KeyError as e:
+            print(f"KeyError for right: {e}")
+        try:
+            #observers["top"] = [int(self.data['variables_found']['0'+str(k)]) for k in range(1, self.GRID_LEN+1)]
+            observers["top"] = [int(self.data['variables_found'].get('0'+str(k), 0)) for k in range(1, self.GRID_LEN+1)]
+        except KeyError as e:
+            print(f"KeyError for top: {e}")
+        try:
+            #observers["bottom"] = [int(self.data['variables_found'][str(self.GRID_LEN+1) + str(k)]) for k in range(1, self.GRID_LEN+1)]
+            observers["bottom"] = [int(self.data['variables_found'].get(str(self.GRID_LEN+1) + str(k), 0)) for k in range(1, self.GRID_LEN+1)]
+        except KeyError as e:
+            print(f"KeyError for bottom: {e}")
+
+        print("Observers: ", observers)
 
         cells = []
         [[cells.append(str(i) + str(j)) for j in range(self.GRID_LEN)] for i in range(self.GRID_LEN)]
@@ -186,10 +207,12 @@ class Solver:
         domain = self.neighbors_heuristic(assignment, domains_copy, var)
         for value in domain:
             assignment[var] = value
+
             if self.is_consistent(assignment, csp["CONSTRAINTS"]):
                 result = self.recursive_backtracking(assignment, csp)
                 if result != "FAILURE":
                     return result
+                
             assignment[var] = None
         return "FAILURE"
 
@@ -271,6 +294,7 @@ class Solver:
 
         elif self.info['game'] == 'skyscrapers':
             asmt_matrix = np.zeros((self.GRID_LEN, self.GRID_LEN))
+                    
             for i in range(self.GRID_LEN):
                 if self.observers['left'][i] == self.GRID_LEN:
                     asmt_matrix[i, :] = list(range(1, self.GRID_LEN+1))
