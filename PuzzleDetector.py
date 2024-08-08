@@ -229,11 +229,14 @@ class PuzzleDetector:
     def findPolygon(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (7, 7), 3)
+
         thresh = cv2.adaptiveThreshold(blurred, 255,
                                        cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+        
         thresh = cv2.bitwise_not(thresh, thresh)
 
         cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
+        
         contours = sorted(cnts, key=cv2.contourArea, reverse=True)
         polygon = contours[0]
 
@@ -241,6 +244,7 @@ class PuzzleDetector:
 
         output = img.copy()
         cv2.drawContours(output, [approx], -1, (0, 255, 0), 2)
+
         return polygon, output
 
     def distance(self, p1, p2):
