@@ -21,7 +21,7 @@ if len(sys.argv) > 1:#TODO check + controllo games
         info['game'] = sys.argv[1]
     if sys.argv[2] is not None:
         info['GRID_LEN'] = int(sys.argv[2])
-    if sys.argv[3] is not None:
+    if len(sys.argv) > 3 and sys.argv[3] is not None:
         info['SQUARE_LEN'] = int(sys.argv[3])
 
 puzzle_detected = False
@@ -32,7 +32,7 @@ detector = PuzzleDetector(info)
 classifier = DigitClassifier()
 solver = Solver(info)
 
-REAL_TIME = True
+REAL_TIME = False
 
 # 1. Board detection phase
 
