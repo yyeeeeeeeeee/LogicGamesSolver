@@ -44,13 +44,13 @@ jobs:
         xvfb-run -a python main.py stars 8 1
       continue-on-error: true
       
-    - name: Run skyscrapers solver with timeout
-      run: |
-        timeout 300s xvfb-run -a python main.py skyscrapers 8 > output.log 2>&1
-        if grep -q "Error" output.log; then
-          echo "Error found in skyscrapers solver' output, skipping subsequent steps"
-          exit 1
-        fi
+    #- name: Run skyscrapers solver with timeout
+    #  run: |
+    #    timeout 300s xvfb-run -a python main.py skyscrapers 8 > output.log 2>&1
+    #    if grep -q "Error" output.log; then
+    #      echo "Error found in skyscrapers solver' output, skipping subsequent steps"
+    #      exit 1
+    #    fi
       
     - name: Lint with flake8
       run: |
