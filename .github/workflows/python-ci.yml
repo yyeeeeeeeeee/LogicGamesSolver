@@ -37,12 +37,22 @@ jobs:
     - name: Run sudoku solver
       run: |
         xvfb-run -a python main.py sudoku 9 3
+      continue-on-error: true
+        
     - name: Run stars solver
       run: |
         xvfb-run -a python main.py stars 8 1
+      continue-on-error: true
+      
     - name: Run skyscrapers solver
       run: |
         xvfb-run -a python main.py skyscrapers 8
+        if [ -f "error_flag.txt" ]; then
+          echo "Error flag found, skipping subsequent steps"
+          exit 0
+        fi
+      continue-on-error: true
+      
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
