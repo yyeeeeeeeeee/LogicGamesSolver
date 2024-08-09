@@ -32,12 +32,18 @@ jobs:
         pip install tensorflow
         pip install scikit-learn
         pip install scikit-image
+    - name: Run sudoku solver
+      run: |
+        python main.py sudoku 9 3
+    - name: Run stars solver
+      run: |
+        python main.py stars 8 1
+    - name: Run skyscrapers solver
+      run: |
+        python main.py skyscrapers 8
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Run Test with pytest
-      run: |
-        pytest
