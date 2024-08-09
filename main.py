@@ -80,17 +80,28 @@ data = {
 }
 solved = solver.solveGame(data)
 
+def save_image(image, title, file_prefix="output"):
+    """ Save image to a file with a unique name based on the title. """
+    if not os.path.exists("images"):
+        os.makedirs("images")
+    filename = f"imgs/{file_prefix}_{title.replace(' ', '_').replace(':', '')}.png"
+    cv2.imwrite(filename, image)
+    
 # cv2.imshow("Digits found", solver.drawResult(detector.grid_image, digits_found))
 end = timer()
 print(end - start, " seconds")
 if solved != "SOLVED":
     print("Error: ", solved)
-    cv2.imshow("Impossible without solution (wrong ocr?)", solver.drawResult(detector.grid_image, digits_found))
+    #cv2.imshow("Impossible without solution (wrong ocr?)", solver.drawResult(detector.grid_image, digits_found))
+    result_image = solver.drawResult(detector.grid_image, digits_found)
+    save_image(result_image, "Impossible_without_solution_wrong_ocr")
 else:
     print("Game solved?: ", solved)
-    cv2.imshow("Game Solved in "+ str(end - start)+" seconds", solver.drawResult(detector.grid_image, solver.result))
+    #cv2.imshow("Game Solved in "+ str(end - start)+" seconds", solver.drawResult(detector.grid_image, solver.result))
+    result_image = solver.drawResult(detector.grid_image, solver.result)
+    save_image(result_image, f"Game_Solved_in_{end - start}_seconds")
 
-cv2.waitKey(0)
+#cv2.waitKey(0)
 
 cap.release()
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
