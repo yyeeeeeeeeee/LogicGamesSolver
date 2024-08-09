@@ -6,6 +6,8 @@ import cv2
 import sys
 from timeit import default_timer as timer
 
+import os
+
 #TODO Arguments parser con sys
 
 
