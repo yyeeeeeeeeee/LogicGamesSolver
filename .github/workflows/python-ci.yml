@@ -32,15 +32,17 @@ jobs:
         pip install tensorflow
         pip install scikit-learn
         pip install scikit-image
+    - name: Install virtual display
+      run: sudo apt-get install -y xvfb
     - name: Run sudoku solver
       run: |
-        python main.py sudoku 9 3
+        xvfb-run -a python main.py sudoku 9 3
     - name: Run stars solver
       run: |
-        python main.py stars 8 1
+        xvfb-run -a python main.py stars 8 1
     - name: Run skyscrapers solver
       run: |
-        python main.py skyscrapers 8
+        xvfb-run -a python main.py skyscrapers 8
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
