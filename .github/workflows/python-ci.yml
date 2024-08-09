@@ -16,6 +16,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Set a timeout for the job
 
     steps:
     - uses: actions/checkout@v4
@@ -46,12 +47,12 @@ jobs:
       
     - name: Run skyscrapers solver
       run: |
-        xvfb-run -a python main.py skyscrapers 8
-        if [ -f "error_flag.txt" ]; then
-          echo "Error flag found, skipping subsequent steps"
-          exit 0
+        xvfb-run -a python main.py skyscrapers 8 > output.log 2>&1
+        if grep -q "Error" output.log; then
+          echo "Error found in output, skipping subsequent steps"
+          exit 1
         fi
-      continue-on-error: true
+      continue-on-error: false
       
     - name: Lint with flake8
       run: |
