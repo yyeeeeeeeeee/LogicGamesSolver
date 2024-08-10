@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 import sys
 import numpy as np
 import cv2
-from ..Solver import Solver  # Replace with the actual module
+from Solver import Solver
 
 class TestSolverResults(unittest.TestCase):
 
