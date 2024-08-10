@@ -63,7 +63,7 @@ class TestSolverResults(unittest.TestCase):
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
-        self.assertEqual(result_image.shape, grid_image)
+        self.assertEqual(result_image.shape, (1575, 2183))
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
@@ -97,6 +97,12 @@ class TestSolverResults(unittest.TestCase):
         domains = {}
         for var in cells:
             domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
+
+        self.solver.CSP = {
+            "VARIABLES": cells,
+            "DOMAINS": domains,
+            "CONSTRAINTS": [self.solver.alldiff_in_cols_and_rows, self.solver.all_diff_in_areas]
+        }
 
         # Create a mock grid image
         grid_image = np.zeros((1575, 2183), dtype=np.uint8)
@@ -153,6 +159,12 @@ class TestSolverResults(unittest.TestCase):
         domains = {}
         for var in cells:
             domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
+
+        self.solver.CSP = {
+            "VARIABLES": cells,
+            "DOMAINS": domains,
+            "CONSTRAINTS": [self.solver.alldiff_in_cols_and_rows, self.solver.all_diff_in_areas]
+        }
 
         # Create a mock grid image
         grid_image = np.zeros((525, 743), dtype=np.uint8)
