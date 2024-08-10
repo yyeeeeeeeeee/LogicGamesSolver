@@ -62,6 +62,7 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSudokuResult(grid_image, sudoku_values)
+        print("result_image shape sudoku: ", result_image.shape)
 
         # Verify the image
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
@@ -91,6 +92,7 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawStarsResult(grid_image, stars_values)
+        print("result_image shape stars: ", result_image.shape)
 
         # Verify the image
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
@@ -115,6 +117,7 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
+        print("result_image shape skyscrapers: ", result_image.shape)
 
         # Verify the image
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size

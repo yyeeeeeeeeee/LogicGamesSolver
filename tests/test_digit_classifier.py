@@ -29,24 +29,12 @@ class TestDigitClassifier(unittest.TestCase):
         classifier.model = MagicMock()
         classifier.model_built = True
 
-        #digit_image = np.zeros((28, 28), dtype=np.uint8)  # Grayscale image
-        sudoku_values = {'00': '6', '01': '8', '02': '4', '03': '1', '04': '5', '05': '9', '06': '7',
-                        '07': '3', '08': '2', '10': '7', '11': '5', '12': '1', '13': '8', '14': '3',
-                        '15': '2', '16': '9', '17': '4', '18': '6', '20': '9', '21': '2', '22': '3',
-                        '23': '6', '24': '7', '25': '4', '26': '1', '27': '8', '28': '5', '30': '1',
-                        '31': '9', '32': '2', '33': '3', '34': '6', '35': '5', '36': '8', '37': '7',
-                        '38': '4', '40': '8', '41': '4', '42': '5', '43': '2', '44': '1', '45': '7', 
-                        '46': '6', '47': '9', '48': '3', '50': '3', '51': '6', '52': '7', '53': '4', 
-                        '54': '9', '55': '8', '56': '2', '57': '5', '58': '1', '60': '2', '61': '3', 
-                        '62': '9', '63': '7', '64': '4', '65': '6', '66': '5', '67': '1', '68': '8', 
-                        '70': '5', '71': '1', '72': '6', '73': '9', '74': '8', '75': '3', '76': '4', 
-                        '77': '2', '78': '7', '80': '4', '81': '7', '82': '8', '83': '5', '84': '2', 
-                        '85': '1', '86': '3', '87': '6', '88': '9'}
+        digit_image = np.zeros((28, 28), dtype=np.uint8)  # Grayscale image
         
-        prediction = classifier.predictDigitImage(sudoku_values)
-        print("prediction length: ", len(prediction))
+        prediction = classifier.predictDigitImage(digit_image)
+        print("prediction length: ", prediction)
         
-        self.assertNotEqual(prediction, 81)
+        self.assertNotEqual(prediction, 2)
 
         # Verify that the mocked methods were called as expected
         mock_img_to_array.assert_called_once()
