@@ -29,14 +29,14 @@ class TestDigitClassifier(unittest.TestCase):
         classifier.model = MagicMock()
         classifier.model_built = True
 
-        digit_image = np.zeros((28, 28))
-        prediction = classifier.predictDigitImage(digit_image)
+        #digit_image = np.zeros((28, 28))
+        prediction = classifier.predictDigitImage(mock_img_to_array)
         print("prediction: ", prediction)
         
         self.assertEqual(prediction, 2)
         mock_predict.assert_called_once()
 
-    @patch('DigitClassifier.predictDigitImage')
+    @patch.object(DigitClassifier, 'predictDigitImage')
     def test_analyze_boards(self, mock_predict_digit_image):
         mock_predict_digit_image.side_effect = lambda x: 1 if np.any(x) else 0
         
@@ -61,7 +61,7 @@ class TestDigitClassifier(unittest.TestCase):
         self.assertEqual(len(classifier.puzzles), 2)
         self.assertEqual(classifier.puzzles_seen, 2)
 
-    @patch('DigitClassifier.analyze_boards')
+    @patch.object(DigitClassifier, 'analyze_boards')
     def test_get_sudoku_digits(self, mock_analyze_boards):
         mock_analyze_boards.return_value = {'00': '1', '01': '2'}
         
@@ -75,8 +75,7 @@ class TestDigitClassifier(unittest.TestCase):
         
         self.assertEqual(digits_found, {'00': '1', '01': '2'})
 
-
-    @patch('DigitClassifier.analyze_skyscrapers_boards')
+    @patch.object(DigitClassifier, 'analyze_skyscrapers_boards')
     def test_get_skyscrapers_digits(self, mock_analyze_skyscrapers_boards):
         mock_analyze_skyscrapers_boards.return_value = {'00': '1', '01': '2'}
         

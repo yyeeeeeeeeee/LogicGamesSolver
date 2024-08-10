@@ -18,9 +18,10 @@ class TestSolver(unittest.TestCase):
             'GRID_LEN': 9,
             'SQUARE_LEN': 3,
         }
+        
+        solver = Solver(game_info)
         solver.iterations = 0
 
-        solver = Solver(game_info)
         assignment = {'00': None, '01': '3', '02': '4'}
         var = solver.select_unassigned_variable(['00', '01', '02'], assignment)
         self.assertEqual(var, '00')
@@ -32,7 +33,21 @@ class TestSolver(unittest.TestCase):
             'SQUARE_LEN': 3,
         }
         solver = Solver(game_info)
-        assignment = {'00': '5', '01': '3', '02': '4', '03': '1', '04': '2', '06': '9', '08': '8', '10': '6', '11': '7'}
+        assignment = {'00': '6', '01': '8', '02': '4', '03': '1', '04': '5', '05': '9', 
+                      '06': '7', '07': '3', '08': '2', '10': '7', '11': '5', '12': '1', 
+                      '13': '8', '14': '3', '15': '2', '16': '9', '17': '4', '18': '6', 
+                      '20': '9', '21': '2', '22': '3', '23': '6', '24': '7', '25': '4', 
+                      '26': '1', '27': '8', '28': '5', '30': '1', '31': '9', '32': '2', 
+                      '33': '3', '34': '6', '35': '5', '36': '8', '37': '7', '38': '4', 
+                      '40': '8', '41': '4', '42': '5', '43': '2', '44': '1', '45': '7', 
+                      '46': '6', '47': '9', '48': '3', '50': '3', '51': '6', '52': '7', 
+                      '53': '4', '54': '9', '55': '8', '56': '2', '57': '5', '58': '1', 
+                      '60': '2', '61': '3', '62': '9', '63': '7', '64': '4', '65': '6', 
+                      '66': '5', '67': '1', '68': '8', '70': '5', '71': '1', '72': '6', 
+                      '73': '9', '74': '8', '75': '3', '76': '4', '77': '2', '78': '7', 
+                      '80': '4', '81': '7', '82': '8', '83': '5', '84': '2', '85': '1', 
+                      '86': '3', '87': '6', '88': '9'}
+
         constraints = [solver.alldiff_in_cols_and_rows]
         self.assertTrue(solver.is_consistent(assignment, constraints))
 
@@ -52,12 +67,12 @@ class TestSolver(unittest.TestCase):
         solver = Solver(game_info)
 
         cells = []
-        [[cells.append(str(i) + str(j)) for j in range(self.GRID_LEN)] for i in range(self.GRID_LEN)]
+        [[cells.append(str(i) + str(j)) for j in range(solver.GRID_LEN)] for i in range(solver.GRID_LEN)]
 
         domains = {}
         for var in cells:
             # var = '00'
-            domains[var] = [str(k + 1) for k in range(self.GRID_LEN)]
+            domains[var] = [str(k + 1) for k in range(solver.GRID_LEN)]
 
         solver.CSP = {
             "VARIABLES": cells,

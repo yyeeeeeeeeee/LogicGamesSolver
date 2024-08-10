@@ -8,63 +8,31 @@ class TestPuzzleDetector(unittest.TestCase):
 
     def setUp(self):
 
-        # sudoku sample image
         # Define the size of the image
         image_size = (500, 500)
-        # Create a list with a mixture of None and NumPy arrays
-        my_list = [
-            None, None, None, None, None, None, None, None, 
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, None, None, None, 
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            None, np.zeros(image_size + (3,), dtype=np.uint8),
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
-            np.zeros(image_size + (3,), dtype=np.uint8),
-            None
-        ]
 
-        # stars sample image
-        # Define the size and shape of the grid sections
-        section_sizes = [
-            17, 6, 15, 4, 5, 9, 7, 2
-        ]
-        # Initialize an empty list to hold the list of lists
-        grid_sections = []
-        # Generate each section
-        for size in section_sizes:
-            # Create a NumPy array of string identifiers
-            # For simplicity, use a sequence of numbers formatted as strings
-            section_array = np.array([f'{i:02}' for i in range(size)], dtype='<U2')
-            
-            # Convert the NumPy array to a list and append to grid_sections
-            grid_sections.append(section_array.tolist())
-
+        # Initialize a sample image with zeros (black image)
+        self.sudoku_sample_image = np.zeros(image_size + (3,), dtype=np.uint8)
         
-        # skyscrapers sample image
-        # Number of arrays you want in the list
-        num_arrays = 10
-        # Generate the list of zero-filled arrays
-        zero_arrays_list = [np.zeros(image_size, dtype=np.uint8) for _ in range(num_arrays)]
+        # stars sample image - assuming it represents grid sections as a single image
+        section_sizes = [17, 6, 15, 4, 5, 9, 7, 2]
+        grid_sections = []
+        for size in section_sizes:
+            # Just for illustration, we'll create a simple image of each section
+            section_image = np.full((size, size, 3), 255, dtype=np.uint8)  # white square of the given size
+            grid_sections.append(section_image)
+        # Combine sections into a single image if needed (this is an example, adjust as necessary)
+        self.stars_sample_image = np.vstack(grid_sections)
+        
+        # Skyscrapers sample image
+        self.skyscrapers_sample_image = np.zeros(image_size, dtype=np.uint8) # Use a single zero-filled array
 
         # Sample game_info for different puzzle types
         self.sudoku_info = {'game': 'sudoku', 'GRID_LEN': 9, 'SQUARE_LEN': 3}
         self.stars_info = {'game': 'stars', 'GRID_LEN': 8, 'NUM_STARS': 1}
         self.skyscrapers_info = {'game': 'skyscrapers', 'GRID_LEN': 6, 'SQUARE_LEN': 1}
-
-        # Creating a sample empty image for testing
-        self.sudoku_sample_image = [item for item in my_list]
-        self.stars_sample_image = [section for section in grid_sections]
-        self.skyscrapers_sample_image = [array for i, array in enumerate(zero_arrays_list)]
+        
+        # Initialize PuzzleDetector instances
         self.sudoku_detector = PuzzleDetector(self.sudoku_info)
         self.stars_detector = PuzzleDetector(self.stars_info)
         self.skyscrapers_detector = PuzzleDetector(self.skyscrapers_info)
@@ -76,7 +44,7 @@ class TestPuzzleDetector(unittest.TestCase):
     @patch.object(PuzzleDetector, 'findPolygon')
     @patch.object(cv2, 'imshow')
     def test_detectSudokuBoard(self, mock_imshow, mock_findPolygon):
-        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.sample_image)
+        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.sudoku_sample_image)
         self.sudoku_detector.detectSudokuBoard(self.sudoku_sample_image)
         
         self.assertEqual(len(self.detector.grid_digit_images), 81)
@@ -86,7 +54,7 @@ class TestPuzzleDetector(unittest.TestCase):
     @patch.object(cv2, 'imshow')
     def test_detectStarsBoard(self, mock_imshow, mock_findPolygon):
         self.stars_detector.game_info = self.stars_info
-        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.sample_image)
+        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.stars_sample_image)
         self.stars_detector.detectStarsBoard(self.stars_sample_image)
 
         self.assertEqual(len(self.stars_detector.grid_digit_images), self.stars_info['GRID_LEN'])
@@ -96,7 +64,7 @@ class TestPuzzleDetector(unittest.TestCase):
     @patch.object(cv2, 'imshow')
     def test_detectSkyscrapersBoard(self, mock_imshow, mock_findPolygon):
         self.detector.game_info = self.skyscrapers_info
-        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.sample_image)
+        mock_findPolygon.return_value = (np.array([[[0, 0]], [[0, 100]], [[100, 100]], [[100, 0]]]), self.skyscrapers_sample_image)
         self.skyscrapers_detector.detectSkyscrapersBoard(self.skyscrapers_sample_image)
 
         self.assertTrue(len(self.skyscrapers_detector.grid_digit_images) > 0)
@@ -129,7 +97,7 @@ class TestPuzzleDetector(unittest.TestCase):
             ['10', '11', '12'],
             ['20', '21', '22']
         ]
-        areas = self.detector.get_stars_areas(puzzles)
+        areas = self.stars_detector.get_stars_areas(puzzles)
         self.assertEqual(areas, ['00', '01', '02'])
 
 if __name__ == '__main__':

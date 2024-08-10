@@ -13,14 +13,16 @@ class TestSolverResults(unittest.TestCase):
             'GRID_LEN': 9,
             'SQUARE_LEN': 3,
         }
-
-        if len(sys.argv) > 1:#TODO check + controllo games
-            if sys.argv[1] is not None:
-                info['game'] = sys.argv[1]
-            if sys.argv[2] is not None:
-                info['GRID_LEN'] = int(sys.argv[2])
-            if len(sys.argv) > 3 and sys.argv[3] is not None:
-                info['SQUARE_LEN'] = int(sys.argv[3])
+        if len(sys.argv) > 1:
+            try:
+                if sys.argv[1] is not None:
+                    info['game'] = sys.argv[1]
+                if len(sys.argv) > 2 and sys.argv[2].isdigit():
+                    info['GRID_LEN'] = int(sys.argv[2])
+                if len(sys.argv) > 3 and sys.argv[3].isdigit():
+                    info['SQUARE_LEN'] = int(sys.argv[3])
+            except (ValueError, IndexError):
+                pass  # Ignore errors and use default values
 
         self.solver = Solver(info)
 

@@ -39,7 +39,7 @@ jobs:
       run: |
         xvfb-run -a python main.py stars 8 1
       continue-on-error: true
-    - name: Run skyscrapers solver with timeout
+    - name: Run skyscrapers solver
       run: |
         xvfb-run -a python main.py skyscrapers 6
       continue-on-error: true
