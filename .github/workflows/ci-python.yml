@@ -31,6 +31,9 @@ jobs:
         pip install scikit-image
     - name: Install virtual display
       run: sudo apt-get install -y xvfb
+    - name: Run unit tests
+      run: |
+        pytest --maxfail=1 --disable-warnings -q
     - name: Run sudoku solver
       run: |
         xvfb-run -a python main.py sudoku 9 3
