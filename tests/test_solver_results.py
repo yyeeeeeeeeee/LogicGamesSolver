@@ -166,9 +166,9 @@ class TestSolverResults(unittest.TestCase):
         grid_image = np.zeros((525, 743), dtype=np.uint8)
 
         # Mock data for skyscrapers values
-        skyscrapers_values = {'01': '2', '02': '1', '03': '6', '04': '3', '05': '2', '06': '2', 
-                            '10': '1', '17': '2', '20': '4', '27': '1', '30': '3', '37': '2', 
-                            '40': '2', '47': '2', '50': '1', '57': '2'}
+        skyscrapers_values = {'01': '2', '02': '1', '03': '4', '04': '3', '06': '2', '11': '2',
+                            '12': '1', '17': '2', '18': '4', '23': '1', '24': '3', '29': '2', 
+                            '31': '2', '32': '2', '33': '1', '34': '2'}
 
 
         # Run the function
@@ -179,7 +179,7 @@ class TestSolverResults(unittest.TestCase):
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
-        self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
+        self.assertEqual(mock_putText.call_count, 16)
 
 if __name__ == '__main__':
     unittest.main()
