@@ -39,6 +39,14 @@ jobs:
       run: |
         xvfb-run -a python main.py stars 8 1
       continue-on-error: true
+    - name: Run skyscrapers solver with timeout
+      run: |
+        timeout 300s xvfb-run -a python main.py skyscrapers 8 > output.log 2>&1
+        if grep -q "Error" output.log; then
+          echo "Error found in output, skipping subsequent steps"
+          exit 1
+        fi
+        echo "Skyscrapers Solver Timeout"
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
