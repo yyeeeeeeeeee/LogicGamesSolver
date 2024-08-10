@@ -1,5 +1,5 @@
 import unittest
-from ..Solver import Solver
+from Solver import Solver
 
 class TestSolver(unittest.TestCase):
     def test_is_complete(self):
