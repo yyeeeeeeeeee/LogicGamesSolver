@@ -32,9 +32,10 @@ class TestDigitClassifier(unittest.TestCase):
         digit_image = np.zeros((28, 28), dtype=np.uint8)  # Grayscale image
         
         prediction = classifier.predictDigitImage(digit_image)
-        print("prediction length: ", prediction)
+
+        self.assertIsNone(prediction)
         
-        self.assertNotEqual(prediction, 2)
+        self.assertEqual(prediction, 2)
 
         # Verify that the mocked methods were called as expected
         mock_img_to_array.assert_called_once()

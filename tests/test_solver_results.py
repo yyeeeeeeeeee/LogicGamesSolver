@@ -44,7 +44,7 @@ class TestSolverResults(unittest.TestCase):
     def test_drawSudokuResult(self, mock_putText):
 
         # Create a mock grid image
-        grid_image = np.zeros((450, 450, 3), dtype=np.uint8)  # 450x450 is arbitrary for testing
+        grid_image = np.zeros((1575, 2183), dtype=np.uint8)  # 450x450 is arbitrary for testing
 
         # Mock data for sudoku values
         sudoku_values = {'00': '6', '01': '8', '02': '4', '03': '1', '04': '5', '05': '9', '06': '7',
@@ -65,7 +65,7 @@ class TestSolverResults(unittest.TestCase):
         print("result_image shape sudoku: ", result_image.shape)
 
         # Verify the image
-        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.shape, (1575, 2183))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
@@ -76,7 +76,7 @@ class TestSolverResults(unittest.TestCase):
     def test_drawStarsResult(self, mock_putText):
 
         # Create a mock grid image
-        grid_image = np.zeros((450, 450, 3), dtype=np.uint8)
+        grid_image = np.zeros((1575, 2183), dtype=np.uint8)
 
         # Mock data for stars values
         stars_values = {'00': '0', '01': '0', '02': '1', '03': '0', '04': '0', '05': '0', '06': '0', 
@@ -95,7 +95,7 @@ class TestSolverResults(unittest.TestCase):
         print("result_image shape stars: ", result_image.shape)
 
         # Verify the image
-        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.shape, (1575, 2183))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
@@ -107,7 +107,7 @@ class TestSolverResults(unittest.TestCase):
     def test_drawSkyscrapersResult(self, mock_putText):
 
         # Create a mock grid image
-        grid_image = np.zeros((450, 450, 3), dtype=np.uint8)
+        grid_image = np.zeros((525, 743), dtype=np.uint8)
 
         # Mock data for skyscrapers values
         skyscrapers_values = {'01': '2', '02': '1', '03': '6', '04': '3', '05': '2', '06': '2', 
@@ -120,7 +120,7 @@ class TestSolverResults(unittest.TestCase):
         print("result_image shape skyscrapers: ", result_image.shape)
 
         # Verify the image
-        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.shape, (525, 743))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
