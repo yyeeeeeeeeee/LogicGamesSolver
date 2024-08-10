@@ -29,13 +29,14 @@ class TestDigitClassifier(unittest.TestCase):
         classifier.model = MagicMock()
         classifier.model_built = True
 
-        digit_image = np.zeros((28, 28))
+        digit_image = np.zeros((28, 28), dtype=np.uint8)  # Grayscale image
         prediction = classifier.predictDigitImage(digit_image)
-
-        # Verify that the mocked methods were called as expected
-        mock_predict.assert_called_once()
         
         self.assertEqual(prediction, 2)
+
+        # Verify that the mocked methods were called as expected
+        mock_img_to_array.assert_called_once()
+        mock_predict.assert_called_once()
 
     @patch.object(DigitClassifier, 'predictDigitImage')
     def test_analyze_boards(self, mock_predict_digit_image):

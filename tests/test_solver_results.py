@@ -60,6 +60,7 @@ class TestSolverResults(unittest.TestCase):
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
+        assert mock_putText.call_count > 0
         self.assertTrue(mock_putText.called)
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
 
@@ -81,8 +82,10 @@ class TestSolverResults(unittest.TestCase):
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
-        self.assertTrue(mock_putText.called)
+        assert mock_putText.call_count > 0
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
+        self.assertTrue(mock_putText.called)
+        
 
     @patch.object(cv2, 'putText')
     def test_drawSkyscrapersResult(self, mock_putText):
@@ -102,6 +105,7 @@ class TestSolverResults(unittest.TestCase):
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
+        assert mock_putText.call_count > 0
         self.assertTrue(mock_putText.called)
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
 
