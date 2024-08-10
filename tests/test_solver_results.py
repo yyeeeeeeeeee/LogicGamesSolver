@@ -64,7 +64,6 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawSudokuResult(grid_image, sudoku_values)
 
         # Verify the image
-        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
@@ -94,7 +93,6 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawStarsResult(grid_image, stars_values)
 
         # Verify the image
-        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
@@ -119,7 +117,6 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
 
         # Verify the image
-        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 

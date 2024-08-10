@@ -528,6 +528,7 @@ class Solver:
 
                 grid_image = cv2.putText(grid_image, str(val), (int(square[1][0]-30), int(square[1][1])-10),
                                      cv2.FONT_HERSHEY_DUPLEX, 0.8, color=(0, 255, 0))
+
         return grid_image
 
     def drawStarsResult(self, grid_image, data):
@@ -551,6 +552,7 @@ class Solver:
                 else:
                     grid_image = cv2.putText(grid_image, str(val), (int(square[1][0]-22), int(square[1][1])-7),
                                          cv2.FONT_HERSHEY_DUPLEX, 0.7, color=(0, 255, 0))
+        
         return grid_image
 
     def values_are_ordered(self, asmt):
