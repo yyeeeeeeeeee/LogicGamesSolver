@@ -10,7 +10,7 @@ class TestPuzzleDetector(unittest.TestCase):
         # Sample game_info for different puzzle types
         self.sudoku_info = {'game': 'sudoku', 'GRID_LEN': 9, 'SQUARE_LEN': 3}
         self.stars_info = {'game': 'stars', 'GRID_LEN': 8, 'NUM_STARS': 1}
-        self.skyscrapers_info = {'game': 'skyscrapers', 'GRID_LEN': 6}
+        self.skyscrapers_info = {'game': 'skyscrapers', 'GRID_LEN': 6, 'SQUARE_LEN': 1}
 
         # Creating a sample empty image for testing
         self.sample_image = np.zeros((500, 500, 3), dtype=np.uint8)

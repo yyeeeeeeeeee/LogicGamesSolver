@@ -6,10 +6,9 @@ from ..Solver import Solver
 def test_solve_valid_skyscrapers():
 
     info = {
-    'game': 'skyscrapers', # sudoku, stars, skyscrapers
-    'GRID_LEN': 8,
-    'SQUARE_LEN': 2,
-    'NUM_STARS': 1
+    'game': 'skyscrapers', # skyscrapers
+    'GRID_LEN': 6,
+    'SQUARE_LEN': 1,
    }
 
     if len(sys.argv) > 1:#TODO check + controllo games
@@ -41,10 +40,9 @@ def test_solve_valid_skyscrapers():
 def test_invalid_skyscrapers():
 
     info = {
-    'game': 'skyscrapers', # sudoku, stars, skyscrapers
-    'GRID_LEN': 8,
-    'SQUARE_LEN': 2,
-    'NUM_STARS': 1
+    'game': 'skyscrapers', # skyscrapers
+    'GRID_LEN': 6,
+    'SQUARE_LEN': 1,
    }
 
     if len(sys.argv) > 1:#TODO check + controllo games

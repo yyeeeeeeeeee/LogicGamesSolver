@@ -6,10 +6,9 @@ from ..Solver import Solver
 def test_solve_valid_sudoku():
 
     info = {
-    'game': 'sudoku', # sudoku, stars, skyscrapers
-    'GRID_LEN': 4,
-    'SQUARE_LEN': 2,
-    'NUM_STARS': 1
+    'game': 'sudoku', # sudoku
+    'GRID_LEN': 9,
+    'SQUARE_LEN': 3,
    }
 
     if len(sys.argv) > 1:#TODO check + controllo games
@@ -51,9 +50,8 @@ def test_invalid_sudoku():
         
     info = {
     'game': 'sudoku', # sudoku, stars, skyscrapers
-    'GRID_LEN': 4,
-    'SQUARE_LEN': 2,
-    'NUM_STARS': 1
+    'GRID_LEN': 9,
+    'SQUARE_LEN': 3,
    }
 
     if len(sys.argv) > 1:#TODO check + controllo games

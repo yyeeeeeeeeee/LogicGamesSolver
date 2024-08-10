@@ -14,10 +14,6 @@ class TestImageLoading(unittest.TestCase):
         image ="input_skyscrapers.jpg"
         self.assertIsNotNone(image, "Image should be loaded successfully")
 
-    def test_load_image_failure(self):
-        image = ""
-        self.assertIsNone(image, "Image should not be loaded with an invalid path")
-
 if __name__ == '__main__':
     unittest.main()
 

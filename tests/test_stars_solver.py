@@ -6,9 +6,8 @@ from ..Solver import Solver
 def test_solve_valid_stars():
 
     info = {
-    'game': 'stars', # sudoku, stars, skyscrapers
+    'game': 'stars', # stars
     'GRID_LEN': 8,
-    'SQUARE_LEN': 1,
     'NUM_STARS': 1
    }
 
@@ -40,9 +39,8 @@ def test_solve_valid_stars():
 
 def test_invalid_stars():
     info = {
-    'game': 'stars', # sudoku, stars, skyscrapers
+    'game': 'stars', # stars
     'GRID_LEN': 8,
-    'SQUARE_LEN': 1,
     'NUM_STARS': 1
    }
 
@@ -68,9 +66,8 @@ def test_invalid_stars():
 def test_empty_stars_grid():
 
     info = {
-    'game': 'stars', # sudoku, stars, skyscrapers
+    'game': 'stars', # stars
     'GRID_LEN': 8,
-    'SQUARE_LEN': 1,
     'NUM_STARS': 1
    }
 

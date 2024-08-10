@@ -5,7 +5,8 @@ class TestSolver(unittest.TestCase):
     def test_is_complete(self):
         game_info = {
             'game': 'sudoku',
-            'GRID_LEN': 9
+            'GRID_LEN': 9,
+            'SQUARE_LEN': 3,
         }
         solver = Solver(game_info)
         assignment = {'00': '5', '01': '3', '02': '4', '03': '6', '04': '7', '05': '8', '06': '9', '07': '1', '08': '2'}
@@ -14,7 +15,8 @@ class TestSolver(unittest.TestCase):
     def test_select_unassigned_variable(self):
         game_info = {
             'game': 'sudoku',
-            'GRID_LEN': 9
+            'GRID_LEN': 9,
+            'SQUARE_LEN': 3,
         }
         solver = Solver(game_info)
         assignment = {'00': None, '01': '3', '02': '4'}
@@ -24,7 +26,8 @@ class TestSolver(unittest.TestCase):
     def test_is_consistent(self):
         game_info = {
             'game': 'sudoku',
-            'GRID_LEN': 9
+            'GRID_LEN': 9,
+            'SQUARE_LEN': 3,
         }
         solver = Solver(game_info)
         assignment = {'00': '5', '01': '3', '02': '4', '10': '6', '11': '7'}
@@ -34,7 +37,8 @@ class TestSolver(unittest.TestCase):
     def test_easy_inference(self):
         game_info = {
             'game': 'sudoku',
-            'GRID_LEN': 9
+            'GRID_LEN': 9,
+            'SQUARE_LEN': 3,
         }
         game_data = {
             'variables_found': {
@@ -50,7 +54,8 @@ class TestSolver(unittest.TestCase):
     def test_wrong_initial_assignment(self):
         game_info = {
             'game': 'sudoku',
-            'GRID_LEN': 9
+            'GRID_LEN': 9,
+            'SQUARE_LEN': 3,
         }
         game_data = {
             'variables_found': {
