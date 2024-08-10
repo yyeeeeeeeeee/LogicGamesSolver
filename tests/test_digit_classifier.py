@@ -31,6 +31,7 @@ class TestDigitClassifier(unittest.TestCase):
 
         digit_image = np.zeros((28, 28), dtype=np.uint8)  # Grayscale image
         prediction = classifier.predictDigitImage(digit_image)
+        print("prediction length: ", len(prediction))
         
         self.assertEqual(prediction, 2)
 
