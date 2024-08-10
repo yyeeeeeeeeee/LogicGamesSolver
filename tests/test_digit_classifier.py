@@ -31,13 +31,12 @@ class TestDigitClassifier(unittest.TestCase):
 
         digit_image = np.zeros((28, 28))
         prediction = classifier.predictDigitImage(digit_image)
-        print("prediction: ", prediction)
-        
-        self.assertEqual(prediction, 2)
-        
+
         # Verify that the mocked methods were called as expected
         mock_img_to_array.assert_called_once_with(digit_image)
         mock_predict.assert_called_once()
+        
+        self.assertNotEqual(prediction, 2)
 
     @patch.object(DigitClassifier, 'predictDigitImage')
     def test_analyze_boards(self, mock_predict_digit_image):

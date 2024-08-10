@@ -31,7 +31,6 @@ class TestSolverResults(unittest.TestCase):
 
         domains = {}
         for var in cells:
-            # var = '00'
             domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
 
         self.solver.CSP = {
@@ -41,7 +40,7 @@ class TestSolverResults(unittest.TestCase):
         }
 
 
-    @patch('Solver.cv2.putText')
+    @patch.object(cv2, 'putText')
     def test_drawSudokuResult(self, mock_putText):
 
         self.solver.CSP = {'VARIABLES': [f'cell_{i}' for i in range(self.solver.GRID_LEN * self.solver.GRID_LEN)]}
@@ -56,6 +55,7 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawSudokuResult(grid_image, sudoku_values)
 
         # Verify the image
+        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
@@ -63,7 +63,7 @@ class TestSolverResults(unittest.TestCase):
         self.assertTrue(mock_putText.called)
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
 
-    @patch('Solver.cv2.putText')
+    @patch.object(cv2, 'putText')
     def test_drawStarsResult(self, mock_putText):
 
         # Create a mock grid image
@@ -76,6 +76,7 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawStarsResult(grid_image, stars_values)
 
         # Verify the image
+        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
@@ -83,7 +84,7 @@ class TestSolverResults(unittest.TestCase):
         self.assertTrue(mock_putText.called)
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
 
-    @patch('Solver.cv2.putText')
+    @patch.object(cv2, 'putText')
     def test_drawSkyscrapersResult(self, mock_putText):
 
         # Create a mock grid image
@@ -96,6 +97,7 @@ class TestSolverResults(unittest.TestCase):
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
 
         # Verify the image
+        self.assertTrue(isinstance(result_image, np.ndarray))
         self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
         self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
