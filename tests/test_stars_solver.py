@@ -1,7 +1,7 @@
 # tests/test_stars_solver.py
 import pytest
 import sys
-from Solver import Solver
+from ..Solver import Solver
 
 def test_solve_valid_stars():
 

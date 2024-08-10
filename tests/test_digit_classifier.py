@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from unittest.mock import patch, MagicMock
-from DigitClassifier import DigitClassifier
+from ..DigitClassifier import DigitClassifier
 
 class TestDigitClassifier(unittest.TestCase):
     

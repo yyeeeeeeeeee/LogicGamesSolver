@@ -2,7 +2,7 @@ import unittest
 import cv2
 import numpy as np
 from unittest.mock import patch, MagicMock
-from PuzzleDetector import PuzzleDetector
+from ..PuzzleDetector import PuzzleDetector
 
 class TestPuzzleDetector(unittest.TestCase):
 

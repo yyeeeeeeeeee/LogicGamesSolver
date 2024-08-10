@@ -1,7 +1,7 @@
 # tests/test_skyscrapers_solver.py
 import sys
 import pytest
-from Solver import Solver
+from ..Solver import Solver
 
 def test_solve_valid_skyscrapers():
 
