@@ -14,9 +14,9 @@ class TestPuzzleDetector(unittest.TestCase):
         self.skyscrapers_info = {'game': 'skyscrapers', 'GRID_LEN': 6, 'SQUARE_LEN': 1}
 
         # Load or create sample images
-        self.sudoku_sample_image = cv2.imread('input_sudoku.jpg')
-        self.stars_sample_image = cv2.imread('input_stars.jpg')
-        self.skyscrapers_sample_image = cv2.imread('input_skyscrapers.jpg')
+        self.sudoku_sample_image = cv2.imread('input_sudoku.png')
+        self.stars_sample_image = cv2.imread('input_stars.png')
+        self.skyscrapers_sample_image = cv2.imread('input_skyscrapers.png')
         
         # Initialize PuzzleDetector instances
         self.sudoku_detector = PuzzleDetector(self.sudoku_info)

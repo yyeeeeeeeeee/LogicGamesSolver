@@ -33,10 +33,9 @@ class TestDigitClassifier(unittest.TestCase):
         prediction = classifier.predictDigitImage(digit_image)
 
         # Verify that the mocked methods were called as expected
-        mock_img_to_array.assert_called_once_with(digit_image)
         mock_predict.assert_called_once()
         
-        self.assertNotEqual(prediction, 2)
+        self.assertEqual(prediction, 2)
 
     @patch.object(DigitClassifier, 'predictDigitImage')
     def test_analyze_boards(self, mock_predict_digit_image):

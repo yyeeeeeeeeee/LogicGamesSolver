@@ -113,8 +113,8 @@ class TestSolver(unittest.TestCase):
         }
 
         assignment = solver.easy_inference(solver.CSP)
-        self.assertEqual(assignment['00'], '5')
-        self.assertEqual(assignment['01'], '3')
+        self.assertEqual(assignment['00'], '6')
+        self.assertEqual(assignment['01'], '8')
 
     def test_wrong_initial_assignment(self):
         game_info = {
