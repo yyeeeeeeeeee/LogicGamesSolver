@@ -7,7 +7,9 @@ from Solver import Solver
 
 class TestSolverResults(unittest.TestCase):
 
-    def setUp(self):
+    @patch.object(cv2, 'putText')
+    def test_drawSudokuResult(self, mock_putText):
+
         info = {
             'game': 'sudoku', # sudoku
             'GRID_LEN': 9,
@@ -39,10 +41,6 @@ class TestSolverResults(unittest.TestCase):
             "CONSTRAINTS": [self.solver.alldiff_in_cols_and_rows, self.solver.all_diff_in_areas]
         }
 
-
-    @patch.object(cv2, 'putText')
-    def test_drawSudokuResult(self, mock_putText):
-
         # Create a mock grid image
         grid_image = np.zeros((1575, 2183), dtype=np.uint8)  # 450x450 is arbitrary for testing
 
@@ -65,6 +63,8 @@ class TestSolverResults(unittest.TestCase):
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
+        self.assertEqual(result_image.shape, grid_image)
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
@@ -72,6 +72,31 @@ class TestSolverResults(unittest.TestCase):
 
     @patch.object(cv2, 'putText')
     def test_drawStarsResult(self, mock_putText):
+
+        info = {
+            'game': 'stars', # sudoku
+            'GRID_LEN': 8,
+            'NUM_STARS': 1,
+        }
+        if len(sys.argv) > 1:
+            try:
+                if sys.argv[1] is not None:
+                    info['game'] = sys.argv[1]
+                if len(sys.argv) > 2 and sys.argv[2].isdigit():
+                    info['GRID_LEN'] = int(sys.argv[2])
+                if len(sys.argv) > 3 and sys.argv[3].isdigit():
+                    info['SQUARE_LEN'] = int(sys.argv[3])
+            except (ValueError, IndexError):
+                pass  # Ignore errors and use default values
+
+        self.solver = Solver(info)
+
+        cells = []
+        [[cells.append(str(i) + str(j)) for j in range(self.solver.GRID_LEN)] for i in range(self.solver.GRID_LEN)]
+
+        domains = {}
+        for var in cells:
+            domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
 
         # Create a mock grid image
         grid_image = np.zeros((1575, 2183), dtype=np.uint8)
@@ -93,6 +118,8 @@ class TestSolverResults(unittest.TestCase):
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
+        self.assertEqual(result_image.shape, grid_image)
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
@@ -101,6 +128,31 @@ class TestSolverResults(unittest.TestCase):
 
     @patch.object(cv2, 'putText')
     def test_drawSkyscrapersResult(self, mock_putText):
+
+        info = {
+            'game': 'skyscrapers', # sudoku
+            'GRID_LEN': 6,
+            'SQUARE_LEN': 1,
+        }
+        if len(sys.argv) > 1:
+            try:
+                if sys.argv[1] is not None:
+                    info['game'] = sys.argv[1]
+                if len(sys.argv) > 2 and sys.argv[2].isdigit():
+                    info['GRID_LEN'] = int(sys.argv[2])
+                if len(sys.argv) > 3 and sys.argv[3].isdigit():
+                    info['SQUARE_LEN'] = int(sys.argv[3])
+            except (ValueError, IndexError):
+                pass  # Ignore errors and use default values
+
+        self.solver = Solver(info)
+
+        cells = []
+        [[cells.append(str(i) + str(j)) for j in range(self.solver.GRID_LEN)] for i in range(self.solver.GRID_LEN)]
+
+        domains = {}
+        for var in cells:
+            domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
 
         # Create a mock grid image
         grid_image = np.zeros((525, 743), dtype=np.uint8)
@@ -113,9 +165,12 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
+        print("result_image shape skyscrapers: ", result_image.shape)
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
+        self.assertEqual(result_image.shape, grid_image)
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
