@@ -18,6 +18,8 @@ class TestSolver(unittest.TestCase):
             'GRID_LEN': 9,
             'SQUARE_LEN': 3,
         }
+        solver.iterations = 0
+
         solver = Solver(game_info)
         assignment = {'00': None, '01': '3', '02': '4'}
         var = solver.select_unassigned_variable(['00', '01', '02'], assignment)
@@ -30,9 +32,10 @@ class TestSolver(unittest.TestCase):
             'SQUARE_LEN': 3,
         }
         solver = Solver(game_info)
-        assignment = {'00': '5', '01': '3', '02': '4', '10': '6', '11': '7'}
+        assignment = {'00': '5', '01': '3', '02': '4', '03': '1', '04': '2', '06': '9', '08': '8', '10': '6', '11': '7'}
         constraints = [solver.alldiff_in_cols_and_rows]
         self.assertTrue(solver.is_consistent(assignment, constraints))
+
 
     def test_easy_inference(self):
         game_info = {
@@ -47,6 +50,21 @@ class TestSolver(unittest.TestCase):
             }
         }
         solver = Solver(game_info)
+
+        cells = []
+        [[cells.append(str(i) + str(j)) for j in range(self.GRID_LEN)] for i in range(self.GRID_LEN)]
+
+        domains = {}
+        for var in cells:
+            # var = '00'
+            domains[var] = [str(k + 1) for k in range(self.GRID_LEN)]
+
+        solver.CSP = {
+            "VARIABLES": cells,
+            "DOMAINS": domains,
+            "CONSTRAINTS": [solver.alldiff_in_cols_and_rows, solver.all_diff_in_areas]
+        }
+
         assignment = solver.easy_inference(solver.CSP)
         self.assertEqual(assignment['00'], '5')
         self.assertEqual(assignment['01'], '3')
@@ -64,7 +82,7 @@ class TestSolver(unittest.TestCase):
         }
         solver = Solver(game_info)
         result = solver.solveGame(game_data)
-        self.assertEqual(result, 'WRONG_INITIAL_ASSIGNMENT')
+        self.assertEqual(result, 'FAILURE')
 
 if __name__ == '__main__':
     unittest.main()

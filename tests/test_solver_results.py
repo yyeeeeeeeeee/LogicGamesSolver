@@ -7,14 +7,11 @@ from Solver import Solver
 
 class TestSolverResults(unittest.TestCase):
 
-    @patch('Solver.cv2.putText')
-    def test_drawSudokuResult(self, mock_putText):
-
+    def setUp(self):
         info = {
-            'game': 'sudoku', # sudoku, stars, skyscrapers
+            'game': 'sudoku', # sudoku
             'GRID_LEN': 9,
             'SQUARE_LEN': 3,
-            'NUM_STARS': 1
         }
 
         if len(sys.argv) > 1:#TODO check + controllo games
@@ -26,6 +23,10 @@ class TestSolverResults(unittest.TestCase):
                 info['SQUARE_LEN'] = int(sys.argv[3])
 
         self.solver = Solver(info)
+
+    @patch('Solver.cv2.putText')
+    def test_drawSudokuResult(self, mock_putText):
+
         self.solver.CSP = {'VARIABLES': [f'cell_{i}' for i in range(self.solver.GRID_LEN * self.solver.GRID_LEN)]}
 
         # Create a mock grid image
@@ -43,6 +44,7 @@ class TestSolverResults(unittest.TestCase):
 
     @patch('Solver.cv2.putText')
     def test_drawStarsResult(self, mock_putText):
+
         # Create a mock grid image
         grid_image = np.zeros((450, 450, 3), dtype=np.uint8)
 
@@ -58,6 +60,7 @@ class TestSolverResults(unittest.TestCase):
 
     @patch('Solver.cv2.putText')
     def test_drawSkyscrapersResult(self, mock_putText):
+
         # Create a mock grid image
         grid_image = np.zeros((450, 450, 3), dtype=np.uint8)
 
