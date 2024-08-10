@@ -29,11 +29,14 @@ class TestDigitClassifier(unittest.TestCase):
         classifier.model = MagicMock()
         classifier.model_built = True
 
-        #digit_image = np.zeros((28, 28))
-        prediction = classifier.predictDigitImage(mock_img_to_array)
+        digit_image = np.zeros((28, 28))
+        prediction = classifier.predictDigitImage(digit_image)
         print("prediction: ", prediction)
         
         self.assertEqual(prediction, 2)
+        
+        # Verify that the mocked methods were called as expected
+        mock_img_to_array.assert_called_once_with(digit_image)
         mock_predict.assert_called_once()
 
     @patch.object(DigitClassifier, 'predictDigitImage')

@@ -26,6 +26,21 @@ class TestSolverResults(unittest.TestCase):
 
         self.solver = Solver(info)
 
+        cells = []
+        [[cells.append(str(i) + str(j)) for j in range(self.solver.GRID_LEN)] for i in range(self.solver.GRID_LEN)]
+
+        domains = {}
+        for var in cells:
+            # var = '00'
+            domains[var] = [str(k + 1) for k in range(self.solver.GRID_LEN)]
+
+        self.solver.CSP = {
+            "VARIABLES": cells,
+            "DOMAINS": domains,
+            "CONSTRAINTS": [self.solver.alldiff_in_cols_and_rows, self.solver.all_diff_in_areas]
+        }
+
+
     @patch('Solver.cv2.putText')
     def test_drawSudokuResult(self, mock_putText):
 
@@ -39,6 +54,10 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSudokuResult(grid_image, sudoku_values)
+
+        # Verify the image
+        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
@@ -56,6 +75,10 @@ class TestSolverResults(unittest.TestCase):
         # Run the function
         result_image = self.solver.drawStarsResult(grid_image, stars_values)
 
+        # Verify the image
+        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
+
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
@@ -71,6 +94,10 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
+
+        # Verify the image
+        self.assertEqual(result_image.shape, (450, 450, 3))  # Check image size
+        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)

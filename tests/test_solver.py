@@ -1,5 +1,7 @@
 import unittest
 from Solver import Solver
+from DigitClassifier import DigitClassifier
+from PuzzleDetector import PuzzleDetector
 
 class TestSolver(unittest.TestCase):
     def test_is_complete(self):
@@ -51,27 +53,35 @@ class TestSolver(unittest.TestCase):
         constraints = [solver.alldiff_in_cols_and_rows]
         self.assertTrue(solver.is_consistent(assignment, constraints))
 
-
     def test_easy_inference(self):
         game_info = {
             'game': 'sudoku',
             'GRID_LEN': 9,
             'SQUARE_LEN': 3,
         }
-        game_data = {
-            'variables_found': {
-                '00': '5', '01': '3', '04': '7',
-                # Add more pre-filled values
-            }
-        }
         solver = Solver(game_info)
+        classifier = DigitClassifier()
+        detector = PuzzleDetector(game_info)
+
+        digits_found = {}
+        if game_info['game'] == 'sudoku':
+            digits_found = classifier.get_sudoku_digits(game_info)
+        elif game_info['game'] == 'stars':
+            digits_found = detector.get_stars_areas(classifier.puzzles)
+        elif game_info['game'] == 'skyscrapers':
+            digits_found = classifier.get_skyscrapers_digits(game_info)
+
+        # 3. Game solution phase
+        data = {
+            'variables_found': digits_found
+        }
+        solver.data = data
 
         cells = []
         [[cells.append(str(i) + str(j)) for j in range(solver.GRID_LEN)] for i in range(solver.GRID_LEN)]
 
         domains = {}
         for var in cells:
-            # var = '00'
             domains[var] = [str(k + 1) for k in range(solver.GRID_LEN)]
 
         solver.CSP = {

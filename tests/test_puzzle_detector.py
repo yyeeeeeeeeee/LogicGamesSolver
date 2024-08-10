@@ -10,27 +10,58 @@ class TestPuzzleDetector(unittest.TestCase):
 
         # Define the size of the image
         image_size = (500, 500)
+        # Create a list with a mixture of None and NumPy arrays
+        my_list = [
+            None, None, None, None, None, None, None, None, 
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, None, None, None, 
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            None, np.zeros(image_size + (3,), dtype=np.uint8),
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None, None, None, np.zeros(image_size + (3,), dtype=np.uint8),
+            np.zeros(image_size + (3,), dtype=np.uint8),
+            None
+        ]
 
-        # Initialize a sample image with zeros (black image)
-        self.sudoku_sample_image = np.zeros(image_size + (3,), dtype=np.uint8)
-        
-        # stars sample image - assuming it represents grid sections as a single image
-        section_sizes = [17, 6, 15, 4, 5, 9, 7, 2]
+        # stars sample image
+        # Define the size and shape of the grid sections
+        section_sizes = [ 17, 6, 15, 4, 5, 9, 7, 2]
+        # Initialize an empty list to hold the list of lists
         grid_sections = []
+        # Generate each section
         for size in section_sizes:
-            # Just for illustration, we'll create a simple image of each section
-            section_image = np.full((size, size, 3), 255, dtype=np.uint8)  # white square of the given size
-            grid_sections.append(section_image)
-        # Combine sections into a single image if needed (this is an example, adjust as necessary)
-        self.stars_sample_image = np.vstack(grid_sections)
+            # Create a NumPy array of string identifiers
+            # For simplicity, use a sequence of numbers formatted as strings
+            section_array = np.array([f'{i:02}' for i in range(size)], dtype='<U2')
+            
+            # Convert the NumPy array to a list and append to grid_sections
+            grid_sections.append(section_array.tolist())
+
         
-        # Skyscrapers sample image
-        self.skyscrapers_sample_image = np.zeros(image_size, dtype=np.uint8) # Use a single zero-filled array
+        # skyscrapers sample image
+        # Number of arrays you want in the list
+        num_arrays = 10
+        # Generate the list of zero-filled arrays
+        zero_arrays_list = [np.zeros(image_size, dtype=np.uint8) for _ in range(num_arrays)]
 
         # Sample game_info for different puzzle types
         self.sudoku_info = {'game': 'sudoku', 'GRID_LEN': 9, 'SQUARE_LEN': 3}
         self.stars_info = {'game': 'stars', 'GRID_LEN': 8, 'NUM_STARS': 1}
         self.skyscrapers_info = {'game': 'skyscrapers', 'GRID_LEN': 6, 'SQUARE_LEN': 1}
+
+        # Creating a sample empty image for testing
+        self.sudoku_sample_image = [item for item in my_list]
+        self.stars_sample_image = [section for section in grid_sections]
+        self.skyscrapers_sample_image = [array for i, array in enumerate(zero_arrays_list)]
         
         # Initialize PuzzleDetector instances
         self.sudoku_detector = PuzzleDetector(self.sudoku_info)
