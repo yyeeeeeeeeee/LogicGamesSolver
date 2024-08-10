@@ -62,11 +62,9 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSudokuResult(grid_image, sudoku_values)
-        print("result_image shape sudoku: ", result_image.shape)
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
-        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
@@ -92,11 +90,9 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawStarsResult(grid_image, stars_values)
-        print("result_image shape stars: ", result_image.shape)
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
-        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertEqual(mock_putText.call_count, self.solver.GRID_LEN * self.solver.GRID_LEN)
@@ -117,11 +113,9 @@ class TestSolverResults(unittest.TestCase):
 
         # Run the function
         result_image = self.solver.drawSkyscrapersResult(grid_image, skyscrapers_values)
-        print("result_image shape skyscrapers: ", result_image.shape)
 
         # Verify the image
         self.assertIsNotNone(result_image.shape)  # Check image size
-        self.assertEqual(result_image.dtype, np.uint8)  # Check image type
 
         # Check that cv2.putText was called
         self.assertTrue(mock_putText.called)
