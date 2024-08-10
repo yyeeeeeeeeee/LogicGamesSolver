@@ -31,6 +31,10 @@ jobs:
         pip install scikit-image
     - name: Install virtual display
       run: sudo apt-get install -y xvfb
+    - name: Run sudoku solver
+      run: |
+        xvfb-run -a python main.py sudoku 9 3
+      continue-on-error: true
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
