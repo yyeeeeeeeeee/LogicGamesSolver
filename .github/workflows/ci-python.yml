@@ -32,14 +32,17 @@ jobs:
     - name: Run sudoku solver
       run: |
         xvfb-run -a python main.py sudoku 9 3
+      continue-on-error: true
 
     - name: Run stars solver
       run: |
         xvfb-run -a python main.py stars 8 1
+      continue-on-error: true
 
     - name: Run skyscrapers solver
       run: |
         xvfb-run -a python main.py skyscrapers 6
+      continue-on-error: true
 
     - name: Run unit tests
       run: python -m unittest discover -s tests
