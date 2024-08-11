@@ -1,11 +1,11 @@
 
-name: CI Build Configuration and Test Python application
+name: CI Build Configuration, Test Configuration, and Deployment Configuration
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master","main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master","main" ]
 
 permissions:
   contents: read
@@ -20,31 +20,26 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
-        pip install numpy
-        pip install opencv-python
-        pip install tensorflow
-        pip install scikit-learn
-        pip install scikit-image
+        pip install -r requirements.txt 
+
     - name: Install virtual display
       run: sudo apt-get install -y xvfb
+      
     - name: Run sudoku solver
       run: |
         xvfb-run -a python main.py sudoku 9 3
-      continue-on-error: true
+
     - name: Run stars solver
       run: |
         xvfb-run -a python main.py stars 8 1
-      continue-on-error: true
+
     - name: Run skyscrapers solver
       run: |
         xvfb-run -a python main.py skyscrapers 6
-      continue-on-error: true
-    - name: Set PYTHONPATH
-      run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
     - name: Run unit tests
       run: python -m unittest discover -s tests
@@ -55,3 +50,29 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+  deploy:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Run deployment only on main branch
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          repository: ${{ secrets.DOCKER_USERNAME }}/logic-game-solver
+          context: .
+          push: true
+          tags: logic-game-solver:latest
