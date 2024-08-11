@@ -77,6 +77,6 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          tags: ${{ secrets.DOCKER_REGISTRY_USER }}/logic-game-solver:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/logic-game-solver:latest
           push: true
 
