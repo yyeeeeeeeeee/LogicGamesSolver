@@ -72,10 +72,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          repository: ${{ secrets.DOCKER_USERNAME }}/logic-game-solver
           context: .
+          file: Dockerfile
+          tags: ${{ secrets.DOCKER_REGISTRY_USER }}/logic-game-solver:latest
           push: true
-          tags: logic-game-solver:latest
+
